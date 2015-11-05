@@ -76,21 +76,44 @@ func crossover(chromosome, another []int) [][]int{
 
 }
 
+func timeMutations(iterations int, individual []int) {
+  defer timeTrack(time.Now(), "Mutations")
+
+  for i := 0; i < iterations; i++ {
+    mutate(individual)
+  }
+  return
+
+}
+
 func main() {
   rand.Seed(time.Now().Unix())
-  chromosome := randomChromosome(5)
-  chr_mutated := mutate(chromosome)
-  fmt.Println(chromosome,"->",computeFitness(chromosome),"->",chr_mutated)
+  // chromosome := randomChromosome(5)
+  // chr_mutated := mutate(chromosome)
+  // fmt.Println(chromosome,"->",computeFitness(chromosome),"->",chr_mutated)
+  //
+  //
+  //
+  // population := make([][]int, 6)
+  // for i := range population {
+  //   population[i] = randomChromosome(6)
+  // }
+  // fmt.Println(population,"->",mutatePopulation(population))
+  //
+  // fmt.Println(population[:2],"->",crossover(population[0],population[1]))
 
+  length := 16
+  iterations := 100000
+  top_length := 32768
 
-
-  population := make([][]int, 6)
-  for i := range population {
-    population[i] = randomChromosome(6)
+  for length < top_length {
+    individual := randomChromosome(length)
+    fmt.Print("Go-BitString ",length,", ")
+    timeMutations(iterations,individual)
+    length *= 2
   }
-  fmt.Println(population,"->",mutatePopulation(population))
 
-  fmt.Println(population[:2],"->",crossover(population[0],population[1]))
+
 
 
 
