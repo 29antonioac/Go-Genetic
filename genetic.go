@@ -54,6 +54,27 @@ func timeTrack(start time.Time, name string) {
   fmt.Println(name,"took",elapsed,"seconds")
 }
 
+// Crossover two chromosomes
+func crossover(chromosome, another []int) [][]int{
+  crossover_point := rand.Intn(len(chromosome) - 2)
+
+  interval := 1 + rand.Intn(len(chromosome) - crossover_point - 1)
+
+  fmt.Println(crossover_point, interval)
+
+  new_chromosome  := chromosome[:crossover_point]
+  new_another     := another[:crossover_point]
+
+  new_chromosome  = append(new_chromosome,another[crossover_point:crossover_point + interval + 1]...)
+  new_another     = append(new_another,chromosome[crossover_point:crossover_point + interval + 1]...)
+
+  new_chromosome  = append(new_chromosome,chromosome[crossover_point + interval + 1:]...)
+  new_another     = append(new_another,another[crossover_point + interval + 1:]...)
+
+  return [][]int {new_chromosome, new_another}
+
+
+}
 
 func main() {
   rand.Seed(time.Now().Unix())
@@ -68,6 +89,8 @@ func main() {
     population[i] = randomChromosome(6)
   }
   fmt.Println(population,"->",mutatePopulation(population))
+
+  fmt.Println(population[:2],"->",crossover(population[0],population[1]))
 
 
 
